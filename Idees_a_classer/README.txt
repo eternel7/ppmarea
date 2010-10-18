@@ -1,0 +1,1 @@
+Passage temporaire pour les idées avant qu'elles trouvent leur place au sein des répertoires de classement.

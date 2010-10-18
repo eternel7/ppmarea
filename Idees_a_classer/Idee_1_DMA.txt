@@ -1,0 +1,2 @@
+outil pour créer des checklists et les instancier à partir d'une checklist existante afin de toujours améliorer la qualité, complétude de la dernière version de chaque checklist.
+Utile pour la TMA dans le cas de toutes les actions complexes à la périodicité éloignée.
