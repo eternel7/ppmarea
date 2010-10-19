@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="CREATED" content="20101019;23h25" />
+  <meta name="CHANGED" content="20101019;23h25" />
+  <title>Analyse de log</title>
+
+  <link rel="STYLESHEET" type="text/css" href="style_par_defaut.css" />
+
+</head>
+
+<body>
+<p>Mustapha : Voici mes idées et compléments en vrac <ins>surlignés en
+jaune</ins>.</p>
+
+<p><ins>1) Différencier transactions utilisateurs et systèmes (et les
+correler)</ins></p>
+
+
+<h1>Modèle 1 :</h1>
+
+<h2>TRANSACTION :</h2>
+
+<p>Id_secondaire_Fichier <ins>(nom du fichier de log?)</ins></p>
+
+<p>Id_secondaire_Action <ins>(oula intéressant, je te montrerais ce que l'on a
+fait à ce sujet, mais compliqué tu sais...)</ins></p>
+
+<p>Date début</p>
+
+<p>Date fin (ou Durée, <ins>le plus simple à récupérer dans une
+log</ins>)</p>
+
+<p>Id_secondaire_Utilisateur</p>
+
+<p>Id_secondaire_IP_Utilisateur</p>
+
+<p><ins>port (plusieurs slaves, isoler les forks externes qui ont des ports
+aléatoires...)</ins></p>
+
+<p><ins>serveur (plusieurs cluster, info que tu as peut être via le
+fichier)</ins></p>
+
+<p>...</p>
+
+
+<h2>ACTION :</h2>
+
+<p>Id_Action</p>
+
+<p>Description</p>
+
+<p>Règle de reconnaissance (expression régulaire? <ins>oh que oui</ins>)</p>
+
+<p>Date de mise en application (<ins>MAJ en base, voir transaction système qui
+suit???</ins>)</p>
+
+<p>...</p>
+
+
+<h2>FICHIER :</h2>
+
+<p>Id_Fichier</p>
+
+<p>Id_secondaire_Environnement (Prod, Dev, Rec, Pré-prod, Dev2, ... tout</p>
+
+<p>nom qui permet de regrouper les environnements qui sont multi-serveur)</p>
+
+<p>Date début</p>
+
+<p>Date fin</p>
+
+<p>Serveur</p>
+
+<p>Type (IS, TC, Connect, ...)</p>
+
+<p>Port</p>
+
+<p>Nom de fichier</p>
+
+<p>Lien vers le fichier stocké</p>
+
+<p>Dernière analyse le</p>
+
+<p>Dernière analyse par</p>
+
+<p>...</p>
+
+
+<h2>ENVIRONNEMENT :</h2>
+
+<p>Id_environnement</p>
+
+<p>Nom</p>
+
+<p>Description</p>
+
+<p>Utilisation</p>
+
+<p>Date de mise en service</p>
+
+<p>...</p>
+
+
+<h2>UTILISATEUR :</h2>
+
+<p>Id_Utilisateur</p>
+
+<p>Login</p>
+
+<p>Nom</p>
+
+<p>Prenom</p>
+
+<p>Groupes</p>
+
+<p>Profil fonctionnel</p>
+
+<p>...</p>
+
+
+<h2>IP_UTILISATEUR :</h2>
+
+<p>Id_IP_Utilisateur</p>
+
+<p>IP</p>
+
+
+<h1>Modèle 2 :</h1>
+
+<p>Optimisé pour la taille de la table TRANSACTION et diminuer le nombre de
+tables relationnelles.</p>
+
+<h2>TRANSACTION :</h2>
+
+<p>Id_Transaction</p>
+
+<p>Numero_Transaction_dans_le_log</p>
+
+<p>Id_secondaire_Fichier</p>
+
+<p>Action_1 (oui/non)</p>
+
+<p>Action_2 (oui/non)</p>
+
+<p>Action_3 (oui/non)</p>
+
+<p>...</p>
+
+<p>Action_n (oui/non)</p>
+
+<p>Date début</p>
+
+<p>Date fin (ou Durée en ms)</p>
+
+<p>Id_secondaire_Utilisateur</p>
+
+<p>IP_Utilisateur</p>
+
+<p>...</p>
+
+
+<p>Les tables ACTION et IP_UTILISATEUR peuvent disparaitre (optionnel</p>
+
+<p>pour IP_UTILISATEUR). Les Action_1 à n doivent être déterminé dans le</p>
+
+<p>paramétrage du parseur de log.</p>
+
+<p>Le Numero_Transaction_dans_le_log associé à Id_secondaire_Fichier est</p>
+
+<p>un identifiant de la transaction dans le modèle 2 mais pas dans le</p>
+
+<p>modèle 1. Les champs Action_n peuvent être générés en fonction d'une</p>
+
+<p>table ACTION qui donnerait les règles de "parssage".</p>
+
+<p><ins>Compliqué ce second modèle, il faut savoir qu'aujourd'hui, 1
+transaction = 1 action (sauf dans le cas d'un refresh Applet ou d'un
+Calcul/Recalcul des couts)</ins>.</p>
+
+<p><ins>Ensuite tu peux surement penser qu'une action entraine plusieurs
+chose</ins>.</p>
+
+<p><ins>Exemple : Ouverture d'un projet : 1 lien + 1 Displaying report
+(Rubrique) et N displaying (onglets)</ins></p>
+
+<p><ins>Le modèle 1 est top meme si volume important d'éléments</ins></p>
+</body>
+</html>
