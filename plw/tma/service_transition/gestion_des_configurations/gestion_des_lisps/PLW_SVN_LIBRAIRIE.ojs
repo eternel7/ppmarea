@@ -7,12 +7,12 @@ function EXPORT_SELECTED_OBJECTS_PLW_SVN()
 			//declaration du  fichier pour les lisps et de la liste de ces fichiers:
 			var full_file_name = "";
 			var vfichierlisp = "";
-			var vsafe_carat = "=";
+			var vsafe_charact = "=";
 			
 			var velement = this;
 			
 			var vnomfichierlispcible = velement.index;
-			vnomfichierlispcible = vnomfichierlispcible.substitute("?",vsafe_carat).substitute(":",vsafe_carat).substitute("|",vsafe_carat).substitute("/",vsafe_carat).substitute("\\\\",vsafe_carat).substitute(">",vsafe_carat).substitute("<",vsafe_carat);
+			vnomfichierlispcible = vnomfichierlispcible.substitute("?",vsafe_charact).substitute(":",vsafe_charact).substitute("|",vsafe_charact).substitute("/",vsafe_charact).substitute("\\\\",vsafe_charact).substitute(">",vsafe_charact).substitute("<",vsafe_charact);
 			
 			var vrepertoireexport = context.MAIN_DIRECTORY_PLW_SVN + velement.Get("FILE").index + "/";
 			vrepertoireexport.mkdir();
@@ -23,13 +23,11 @@ function EXPORT_SELECTED_OBJECTS_PLW_SVN()
 			vfichierlisp = new fileOutputStream(full_file_name,"OVERWRITE");
 			vfichierlisp.ExportEnvironmentObject(velement);
 			var vinstant = new date();
-			writeln( vinstant + " : Exporting " + velement.index);
+			writeln( vinstant.ToString("YYYYMMDD hh:mm:ss") + " : Exporting " + velement.index);
 			//Fermeture du fichier d'export
 			vfichierlisp.close();
 
-		}
-		else
-		{
+		} else {
 			//Message pour les classes non exportable:
 			writeln("Can't export this class of object : "+this.index+" ("+this.get("CLASS")+")");
 		}
